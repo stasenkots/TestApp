@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">login</string> <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="login_label">Login</string>
+    <string name="password_non_empty">Password shouldn\'t be empty</string>
+    <string name="username_non_empty">Username shouldn\'t be empty</string>
+</resources>
