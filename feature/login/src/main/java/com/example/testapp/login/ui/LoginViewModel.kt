@@ -4,7 +4,8 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.network.di.NetworkDepsProvider
+import com.example.di.LocalStorageComponentProvider
+import com.example.network.di.NetworkComponentProvider
 import com.example.testapp.login.data.LoginRepository
 import com.example.testapp.login.data.model.LoginResult
 import com.example.testapp.login.data.model.LoginUiState
@@ -17,22 +18,24 @@ internal class LoginViewModel(
     private val loginRepository: LoginRepository = component.repository
 ) : ViewModel() {
 
-    val loginUiState: MutableState<LoginUiState> = mutableStateOf(LoginUiState.NotLoggined)
+    private val _loginUiState: MutableState<LoginUiState> = mutableStateOf(LoginUiState.LogOut)
+    val loginUiState: State<LoginUiState> = _loginUiState
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
             val loginResult = loginRepository.login(username, password)
             when(loginResult) {
-                is LoginResult.Success -> loginUiState.value = LoginUiState.Loggined(loginResult.value)
-                is LoginResult.Error -> loginUiState.value = LoginUiState.ErrorReturned(loginResult.reason)
+                is LoginResult.Success -> _loginUiState.value = LoginUiState.LogIn(loginResult.value)
+                is LoginResult.Error -> _loginUiState.value = LoginUiState.LoginError(loginResult.reason)
             }
         }
     }
 
-    companion object Factory : ViewModelProvider.Factory {
+    class Factory : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val loginComponent = DaggerLoginComponent.builder()
-                .loginApi(NetworkDepsProvider.loginApi)
+                .loginApi(NetworkComponentProvider.loginApi)
+                .userProtoStore(LocalStorageComponentProvider.userProtoStore)
                 .build()
             return LoginViewModel(loginComponent) as T
         }

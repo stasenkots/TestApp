@@ -11,15 +11,29 @@ import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.login.R
-import com.example.testapp.login.data.model.LoginResult
 import com.example.testapp.login.data.model.LoginUiState
 import com.example.testapp.ui.components.OutlinedTextFieldWithError
 
 @Composable
-fun LoginScreen() {
-    val loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
-    val loginState by remember { loginViewModel.loginUiState }
+fun LoginScreen(
+    onLogIn: () -> Unit
+) {
+    val loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory())
+    val loginState by loginViewModel.loginUiState
 
+    LoginScreen(
+        loginState = loginState,
+        login = loginViewModel::login,
+        onLogIn
+    )
+}
+
+@Composable
+fun LoginScreen(
+    loginState: LoginUiState,
+    login: (String, String) -> Unit,
+    onLogIn: () -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -28,30 +42,36 @@ fun LoginScreen() {
             .fillMaxHeight()
     ) {
         Spacer(modifier = Modifier.size(100.dp))
-        LoginAndPassword(loginViewModel)
-        when (loginState) {
-            is LoginUiState.ErrorReturned -> {
-                val message = (loginState as LoginUiState.ErrorReturned).message
-                Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG).show()
-            }
-            is LoginUiState.Loggined -> {
-                val userData = (loginState as LoginUiState.Loggined).userData
-                Toast.makeText(LocalContext.current, userData.toString(), Toast.LENGTH_LONG).show()
-            }
-            is LoginUiState.NotLoggined -> {}
-            is LoginUiState.InProgress -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.width(20.dp),
-                )
-            }
-        }
-
+        LoginAndPassword(login)
+        LoginResult(loginState, onLogIn)
     }
-
 }
 
 @Composable
-private fun LoginAndPassword(loginViewModel: LoginViewModel){
+fun LoginResult(
+    loginState: LoginUiState,
+    onLogIn: () -> Unit
+){
+    when (loginState) {
+        is LoginUiState.LoginError -> {
+            Toast.makeText(LocalContext.current, loginState.message, Toast.LENGTH_LONG).show()
+        }
+        is LoginUiState.LogIn -> {
+
+        }
+        is LoginUiState.LogOut -> {}
+        is LoginUiState.InProgress -> {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .width(80.dp)
+                    .padding(horizontal = 60.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun LoginAndPassword(login: (String, String) -> Unit){
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -77,7 +97,7 @@ private fun LoginAndPassword(loginViewModel: LoginViewModel){
     Spacer(modifier = Modifier.size(100.dp))
 
     Button(
-        onClick = { loginViewModel.login(username, password) },
+        onClick = { login(username, password) },
         enabled = password.isNotEmpty() && username.isNotEmpty()
     ) {
         Text(text = stringResource(R.string.login_label))
@@ -88,5 +108,9 @@ private fun LoginAndPassword(loginViewModel: LoginViewModel){
 @Preview
 @Composable
 fun DefaultPreview() {
-    LoginScreen()
+    LoginScreen(
+        loginState = LoginUiState.InProgress,
+        login = {_, _ -> },
+        onLogIn = {}
+    )
 }

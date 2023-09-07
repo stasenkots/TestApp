@@ -1,13 +1,15 @@
 package com.example.testapp.login.di
 
+import androidx.datastore.core.DataStore
 import com.example.network.login.api.LoginApi
 import com.example.testapp.login.data.LoginRepository
+import com.example.user.UserProto
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Component.Builder
 
 @Component
 internal interface LoginComponent {
+
     val repository: LoginRepository
 
     @Component.Builder
@@ -15,6 +17,9 @@ internal interface LoginComponent {
 
         @BindsInstance
         fun loginApi(loginApi: LoginApi): Builder
+
+        @BindsInstance
+        fun userProtoStore(userProtoStore: DataStore<UserProto>): Builder
 
         fun build(): LoginComponent
     }

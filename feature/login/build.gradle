@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
@@ -9,7 +9,6 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.login"
         minSdk 26
         targetSdk 33
         versionCode 1
@@ -46,6 +45,7 @@ android {
 dependencies {
     implementation(project(":core:ui-components"))
     implementation(project(":core:network"))
+    implementation(project(":core:local-storage"))
     implementation 'com.google.dagger:dagger:2.47'
     kapt 'com.google.dagger:dagger-compiler:2.47'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
