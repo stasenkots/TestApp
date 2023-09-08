@@ -1,7 +1,6 @@
 package com.example.testapp.login.data
 
 import com.example.network.login.dto.UserLoginResponse
-import com.example.testapp.login.data.model.LoginResult
 import com.example.testapp.login.data.model.UserData
 import com.example.user.UserProto
 import org.json.JSONObject
@@ -36,11 +35,9 @@ class LoginMapper @Inject constructor() {
     }
 
 
-
     fun mapUserLoginError(exception: HttpException): String {
         val body = exception.response()?.errorBody()?.string().orEmpty()
         val jsonObject = JSONObject(body)
-        val errorMessage = jsonObject.optString("message")
-        return errorMessage
+        return jsonObject.optString("message")
     }
 }
