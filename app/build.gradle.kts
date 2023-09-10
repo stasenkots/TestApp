@@ -5,13 +5,18 @@ plugins {
 }
 
 android {
-    namespace = "com.example.testapp"
-    compileSdk = 33
+    val compileSdkVersion: Int by rootProject.extra
+    val targetSdkVersion: Int by rootProject.extra
+    val minSdkVersion: Int by rootProject.extra
+    val appPackage: String by rootProject.extra
+
+    namespace = appPackage
+    compileSdk = compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.example.testapp"
-        minSdk = 26
-        targetSdk = 33
+        applicationId = appPackage
+        minSdk = minSdkVersion
+        targetSdk = targetSdkVersion
         versionCode = 1
         versionName = "1.0"
 
@@ -35,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = rootProject.extra["composeUiVersion"].toString()
     }
     packagingOptions {
         resources {
@@ -46,27 +51,20 @@ android {
 
 dependencies {
 
-    val compose_ui_version = "1.1.1"
-    implementation(project(":core:dagger-annotations"))
     implementation(project(":feature:login"))
     implementation(project(":core:ui-components"))
-    implementation(project(":core:local-storage"))
 
-    implementation("com.google.dagger:dagger:2.47")
-    kapt("com.google.dagger:dagger-compiler:2.47")
+    implementation("com.google.dagger:dagger:${rootProject.extra["daggerVersion"]}")
+    kapt("com.google.dagger:dagger-compiler:${rootProject.extra["daggerVersion"]}")
 
-    implementation("androidx.navigation:navigation-compose:2.5.0")
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx: 2.5.0")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.compose.ui:ui:$compose_ui_version")
-    implementation("androidx.compose.ui:ui-tooling-preview:$compose_ui_version")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0")
-    implementation("androidx.compose.material3:material3:1.0.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_ui_version")
-    debugImplementation("androidx.compose.ui:ui-tooling:$compose_ui_version")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_ui_version")
+    implementation("androidx.navigation:navigation-compose:${rootProject.extra["navigationVersion"]}")
+    implementation("androidx.core:core-ktx:${rootProject.extra["androidCoreKtxVersion"]}")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.extra["lifecycleVersion"]}")
+    implementation("androidx.activity:activity-compose:${rootProject.extra["activityComposeVersion"]}")
+    implementation("androidx.compose.ui:ui:${rootProject.extra["composeUiVersion"]}")
+    implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["composeUiVersion"]}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.extra["lifecycleVersion"]}")
+    implementation("androidx.compose.material3:material3:${rootProject.extra["materialVersion"]}")
+    debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["composeUiVersion"]}")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:${rootProject.extra["composeUiVersion"]}")
 }

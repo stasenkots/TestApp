@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:${rootProject.extra["okhttpLoggingInterceptorVersion"]}")
+    api("com.squareup.retrofit2:retrofit:${rootProject.extra["retrofitVersion"]}")
+    implementation("com.squareup.retrofit2:converter-gson:${rootProject.extra["retrofitVersion"]}")
 }

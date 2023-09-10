@@ -10,7 +10,7 @@ import androidx.compose.ui.res.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.login.R
+import com.example.test.R
 import com.example.testapp.login.data.model.LoginUiState
 import com.example.testapp.ui.components.OutlinedTextFieldWithError
 

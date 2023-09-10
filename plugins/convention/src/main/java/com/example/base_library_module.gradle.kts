@@ -8,13 +8,20 @@ plugins {
     id("kotlin-kapt")
 }
 
+
+
 configure<LibraryExtension> {
-    namespace ="com.example"
-    compileSdk = 33
+    val compileSdkVersion: Int by rootProject.extra
+    val targetSdkVersion: Int by rootProject.extra
+    val minSdkVersion: Int by rootProject.extra
+    val appPackage: String by rootProject.extra
+
+    namespace = appPackage
+    compileSdk = compileSdkVersion
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 33
+        minSdk = minSdkVersion
+        targetSdk = targetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +44,7 @@ configure<LibraryExtension> {
 
 
 dependencies {
-    add( "implementation", "com.google.dagger:dagger:2.47")
-    add("kapt",  "com.google.dagger:dagger-compiler:2.47")
+    add( "implementation", "com.google.dagger:dagger:${rootProject.extra["daggerVersion"]}")
+    add("kapt",  "com.google.dagger:dagger-compiler:${rootProject.extra["daggerVersion"]}")
+    add("implementation",  "androidx.core:core-ktx:${rootProject.extra["androidxCoreVersion"]}")
 }
