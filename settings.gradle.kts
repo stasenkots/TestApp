@@ -14,10 +14,13 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TestApp"
 
-include ':app'
+include(":app")
 
-include ':feature:login'
-include ':core:ui-components'
-include ':core:network'
-include ':core:local-storage'
-include ':core:dagger-annotations'
+include(":feature:login")
+include(":core:ui-components")
+include(":core:network")
+include(":core:local-storage")
+include(":core:dagger-annotations")
+include(":convention")
+
+
