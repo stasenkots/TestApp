@@ -18,7 +18,7 @@ internal object UserProtoSerializer : Serializer<UserProto> {
         }
     }
 
-    override suspend fun writeTo(userProto: UserProto, output: OutputStream) {
-        userProto.writeTo(output)
+    override suspend fun writeTo(t: UserProto, output: OutputStream) {
+        t.writeTo(output)
     }
 }

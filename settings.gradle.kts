@@ -23,4 +23,4 @@ include(":core:local-storage")
 include(":core:dagger-annotations")
 include(":convention")
 
-
+includeBuild("plugins")

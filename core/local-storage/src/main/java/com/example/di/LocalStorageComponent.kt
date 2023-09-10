@@ -3,7 +3,6 @@ package com.example.di
 import androidx.datastore.core.DataStore
 import com.example.user.UserProto
 import dagger.Component
-import javax.inject.Qualifier
 
 @Component(modules = [ProtoStoreModule::class], dependencies = [LocalStorageDeps::class])
 interface LocalStorageComponent {

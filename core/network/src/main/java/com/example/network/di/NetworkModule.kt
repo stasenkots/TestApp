@@ -1,6 +1,5 @@
 package com.example.network.di
 
-import com.example.network.BuildConfig
 import com.example.network.login.api.LoginApi
 import dagger.Module
 import dagger.Provides
@@ -15,7 +14,7 @@ internal class NetworkModule {
     @Provides
     fun provideOkhttpClient(): OkHttpClient{
         val logging = HttpLoggingInterceptor()
-        val level = if (BuildConfig.DEBUG) {
+        val level = if (isDebug()) {
             HttpLoggingInterceptor.Level.BODY
         } else {
             HttpLoggingInterceptor.Level.NONE
@@ -37,5 +36,7 @@ internal class NetworkModule {
     fun provideLoginApi(retrofit: Retrofit): LoginApi{
         return retrofit.create(LoginApi::class.java)
     }
+
+    fun isDebug() = true
 
 }
