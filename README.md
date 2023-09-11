@@ -1,8 +1,8 @@
 # TestApp
 
-This is one of my test app to show potencial employer my coding skill
+This is my test app to showcase my coding skills to potential employers.
 
-Project was written using Jetpack Compose for UI, Dagger for Dependency Injection, Multimodule architerture, Retrofit for Networking, Proto DataStore, Kotlin DSL for scripts. CI/CD was created with Github Action
+The project was written using Jetpack Compose for UI, Dagger for Dependency Injection, Multimodule architecture, Retrofit for Networking, Proto DataStore, Kotlin DSL for scripts. CI/CD was set up with Github Actions.
 
 Full description of TestApp requirements you can read in __REQUIREMENTS.MD__
 
