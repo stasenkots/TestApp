@@ -22,5 +22,6 @@ include(":core:network")
 include(":core:local-storage")
 include(":core:dagger-annotations")
 include(":convention")
+include(":core:buildConfig")
 
 includeBuild("plugins")

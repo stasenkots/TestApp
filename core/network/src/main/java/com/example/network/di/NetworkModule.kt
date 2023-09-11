@@ -1,5 +1,6 @@
 package com.example.network.di
 
+import com.example.buildconfig.BuildConfigField
 import com.example.network.login.api.LoginApi
 import dagger.Module
 import dagger.Provides
@@ -14,7 +15,7 @@ internal class NetworkModule {
     @Provides
     fun provideOkhttpClient(): OkHttpClient{
         val logging = HttpLoggingInterceptor()
-        val level = if (isDebug()) {
+        val level = if (BuildConfigField.isDebug) {
             HttpLoggingInterceptor.Level.BODY
         } else {
             HttpLoggingInterceptor.Level.NONE
@@ -27,7 +28,7 @@ internal class NetworkModule {
 
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("https://dummyjson.com")
+        .baseUrl(BuildConfigField.baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
@@ -36,7 +37,4 @@ internal class NetworkModule {
     fun provideLoginApi(retrofit: Retrofit): LoginApi{
         return retrofit.create(LoginApi::class.java)
     }
-
-    fun isDebug() = true
-
 }
