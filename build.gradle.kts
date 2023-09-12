@@ -9,7 +9,7 @@ plugins {
 }
 
 val reportMerge by tasks.registering(io.gitlab.arturbosch.detekt.report.ReportMergeTask::class) {
-    output.set(rootProject.layout.buildDirectory.file("reports/detekt/merge.sarif")) // or "reports/detekt/merge.sarif"
+    output.set(rootProject.layout.buildDirectory.file("reports/detekt/detekt.sarif"))
 }
 
 subprojects {
@@ -20,7 +20,7 @@ subprojects {
     }
 
     reportMerge {
-        input.from(tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().map { it.sarifReportFile }) // or .sarifReportFile
+        input.from(tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().map { it.sarifReportFile })
     }
 }
 
