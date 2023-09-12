@@ -30,3 +30,4 @@ buildscript {
 }
 
 include(":convention")
+include(":codestyle")

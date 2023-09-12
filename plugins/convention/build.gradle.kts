@@ -26,6 +26,7 @@ gradlePlugin {
 
 dependencies {
     compileOnly(gradleApi())
+    implementation("com.example:codestyle:1.0")
     compileOnly("com.android.library:com.android.library.gradle.plugin:7.3.1")
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
 }
