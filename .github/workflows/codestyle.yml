@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  without-type-resolution:
+  run-detekt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
