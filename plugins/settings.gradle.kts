@@ -22,11 +22,6 @@ buildscript {
         mavenCentral()
         google()
     }
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath("com.android.library:com.android.library.gradle.plugin:7.3.1")
-
-    }
 }
 
 include(":convention")

@@ -1,31 +1,31 @@
+
 plugins {
     id("convention-library-plugin")
-    id("com.google.protobuf") version "0.9.2"
+}
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
+    }
+
 }
 
 
 dependencies {
 
     implementation(project(":core:dagger-annotations"))
+    api(project(":core:local-storage:proto"))
     implementation("androidx.room:room-runtime:${rootProject.extra["roomVersion"]}")
+    implementation("androidx.room:room-paging:${rootProject.extra["roomVersion"]}")
     kapt("androidx.room:room-compiler:${rootProject.extra["roomVersion"]}")
+    implementation("androidx.paging:paging-common:${rootProject.extra["pagingVersion"]}")
 
-    api("com.google.protobuf:protobuf-java:${rootProject.extra["protobufVersion"]}")
     api("androidx.datastore:datastore-preferences:${rootProject.extra["dataStoreVersion"]}")
 }
-
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${rootProject.extra["protobufVersion"]}"
-    }
-
-    generateProtoTasks {
-        all().forEach {
-            it.builtins {
-                create("java")
-            }
-        }
-    }
-}
-

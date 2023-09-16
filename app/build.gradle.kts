@@ -31,20 +31,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
         buildConfig = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.extra["composeUiVersion"].toString()
+        kotlinCompilerExtensionVersion = rootProject.extra["composeCompilerVersion"].toString()
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -54,6 +54,7 @@ android {
 dependencies {
 
     implementation(project(":feature:login"))
+    implementation(project(":feature:home"))
     implementation(project(":core:ui-components"))
 
     implementation("com.google.dagger:dagger:${rootProject.extra["daggerVersion"]}")
@@ -69,4 +70,5 @@ dependencies {
     implementation("androidx.compose.material3:material3:${rootProject.extra["materialVersion"]}")
     debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["composeUiVersion"]}")
     debugImplementation("androidx.compose.ui:ui-test-manifest:${rootProject.extra["composeUiVersion"]}")
+
 }

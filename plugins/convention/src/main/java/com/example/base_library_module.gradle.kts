@@ -22,7 +22,6 @@ configure<LibraryExtension> {
 
     defaultConfig {
         minSdk = minSdkVersion
-        targetSdk = targetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,12 +33,16 @@ configure<LibraryExtension> {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
         buildConfig = false
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 }
 

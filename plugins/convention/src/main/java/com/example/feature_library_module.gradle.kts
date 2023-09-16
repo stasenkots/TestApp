@@ -1,10 +1,6 @@
 package com.example
 
-import com.android.build.gradle.LibraryExtension
-
-plugins {
-    id("convention-library-ui-plugin")
-}
+apply<Ui_library_modulePlugin>()
 
 dependencies {
     add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra["coroutinesVersion"]}")

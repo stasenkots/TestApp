@@ -1,14 +1,10 @@
 package com.example.codestyle
 
-import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 plugins {
     id("io.gitlab.arturbosch.detekt")
 }
-
-tasks.withType<Detekt>().configureEach {
-    reports {
-        html.required.set(true)
-    }
+configure<DetektExtension> {
     config.setFrom("$rootDir/config/detekt.yml")
 }

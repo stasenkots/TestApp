@@ -2,9 +2,7 @@ package com.example
 
 import com.android.build.gradle.LibraryExtension
 
-plugins {
-    id("convention-library-plugin")
-}
+apply<Base_library_modulePlugin>()
 
 configure<LibraryExtension> {
 
@@ -13,7 +11,7 @@ configure<LibraryExtension> {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.extra["composeUiVersion"].toString()
+        kotlinCompilerExtensionVersion = rootProject.extra["composeCompilerVersion"].toString()
     }
 }
 
