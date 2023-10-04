@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.home.ui.HomeScreen
 import com.example.testapp.login.ui.LoginScreen
 
 @Composable
@@ -13,6 +14,9 @@ fun TestAppNavHost(navController: NavHostController) {
             LoginScreen(onLogIn = {
                 navController.navigate(Home.route)
             })
+        }
+        composable(route = Home.route) {
+            HomeScreen()
         }
     }
 }

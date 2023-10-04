@@ -2,26 +2,41 @@ package com.example.testapp.login.data
 
 import com.example.network.login.dto.UserLoginResponse
 import com.example.testapp.login.data.model.UserData
-import com.example.user.UserProto
+import com.example.protouser.UserProto
 import org.json.JSONObject
 import retrofit2.HttpException
 import javax.inject.Inject
 
 class LoginMapper @Inject constructor() {
-    fun mapUserLoginResponse(response: UserLoginResponse): UserData {
-            return UserData(
-                id = response.id,
-                email = response.email,
-                firstName = response.firstName,
-                lastName = response.lastName,
-                gender = response.gender,
-                image = response.image,
-                token = response.token,
-                username = response.username
-            )
+
+
+    fun mapUserProtoToUser(userProto: UserProto): UserData {
+        return UserData(
+            id = userProto.id,
+            email = userProto.email,
+            firstName = userProto.firstName,
+            lastName = userProto.lastName,
+            gender = userProto.gender,
+            image = userProto.image,
+            token = userProto.token,
+            username = userProto.username
+        )
     }
 
-    fun mapUserDataToUserData(userProto: UserProto, userData: UserData): UserProto{
+    fun mapUserLoginResponse(response: UserLoginResponse): UserData {
+        return UserData(
+            id = response.id,
+            email = response.email,
+            firstName = response.firstName,
+            lastName = response.lastName,
+            gender = response.gender,
+            image = response.image,
+            token = response.token,
+            username = response.username
+        )
+    }
+
+    fun mapUserDataToUserData(userProto: UserProto, userData: UserData): UserProto {
         return userProto.toBuilder()
             .setEmail(userData.email)
             .setId(userData.id)

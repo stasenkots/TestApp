@@ -57,7 +57,7 @@ fun LoginResult(
             Toast.makeText(LocalContext.current, loginState.message, Toast.LENGTH_LONG).show()
         }
         is LoginUiState.LogIn -> {
-
+            onLogIn()
         }
         is LoginUiState.LogOut -> {}
         is LoginUiState.InProgress -> {

@@ -3,7 +3,7 @@ package com.example.protostore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.example.user.UserProto
+import com.example.protouser.UserProto
 
 private const val DATA_STORE_FILE_NAME = "user_proto.pb"
 

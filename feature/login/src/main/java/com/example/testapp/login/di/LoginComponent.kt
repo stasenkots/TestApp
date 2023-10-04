@@ -3,7 +3,7 @@ package com.example.testapp.login.di
 import androidx.datastore.core.DataStore
 import com.example.network.login.api.LoginApi
 import com.example.testapp.login.data.LoginRepository
-import com.example.user.UserProto
+import com.example.protouser.UserProto
 import dagger.BindsInstance
 import dagger.Component
 

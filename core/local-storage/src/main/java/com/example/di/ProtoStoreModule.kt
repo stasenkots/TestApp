@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import com.example.annotations.AppContext
 import com.example.protostore.userProtoStore
-import com.example.user.UserProto
+import com.example.protouser.UserProto
 import dagger.Module
 import dagger.Provides
 

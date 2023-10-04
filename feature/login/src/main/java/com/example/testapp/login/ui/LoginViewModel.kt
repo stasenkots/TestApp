@@ -11,6 +11,7 @@ import com.example.testapp.login.data.model.LoginResult
 import com.example.testapp.login.data.model.LoginUiState
 import com.example.testapp.login.di.DaggerLoginComponent
 import com.example.testapp.login.di.LoginComponent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 internal class LoginViewModel(
@@ -22,7 +23,7 @@ internal class LoginViewModel(
     val loginUiState: State<LoginUiState> = _loginUiState
 
     fun login(username: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val loginResult = loginRepository.login(username, password)
             when(loginResult) {
                 is LoginResult.Success -> _loginUiState.value = LoginUiState.LogIn(loginResult.value)

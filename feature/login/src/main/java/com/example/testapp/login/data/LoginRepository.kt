@@ -4,7 +4,8 @@ import androidx.datastore.core.DataStore
 import com.example.network.login.api.LoginApi
 import com.example.network.login.dto.UserLoginDto
 import com.example.testapp.login.data.model.LoginResult
-import com.example.user.UserProto
+import com.example.protouser.UserProto
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import javax.inject.Inject
 

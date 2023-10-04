@@ -1,7 +1,8 @@
 package com.example.di
 
 import androidx.datastore.core.DataStore
-import com.example.user.UserProto
+import com.example.db.TestAppDatabase
+import com.example.protouser.UserProto
 
 object LocalStorageComponentProvider {
     private val localStorageComponent by lazy {
@@ -13,4 +14,7 @@ object LocalStorageComponentProvider {
 
     val userProtoStore: DataStore<UserProto>
         get() = localStorageComponent.userProtoStore
+
+    val database: TestAppDatabase
+        get() = localStorageComponent.database
 }

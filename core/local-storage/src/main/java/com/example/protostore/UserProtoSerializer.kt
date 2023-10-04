@@ -2,7 +2,7 @@ package com.example.protostore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.example.user.UserProto
+import com.example.protouser.UserProto
 import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream

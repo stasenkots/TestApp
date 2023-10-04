@@ -25,3 +25,6 @@ include(":convention")
 include(":core:buildConfig")
 
 includeBuild("plugins")
+include(":feature:home")
+include(":core:local-storage:proto")
+include(":feature:user")
