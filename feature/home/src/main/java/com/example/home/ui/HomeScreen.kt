@@ -26,15 +26,15 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun HomeScreen() {
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory())
+    val postsFlow = remember { homeViewModel.posts }
 
-    HomeScreen(homeViewModel.posts)
+    HomeScreen { postsFlow }
 }
 
 @Composable
-fun HomeScreen(postsFlow: Flow<PagingData<Post>>) {
-    val posts = postsFlow.collectAsLazyPagingItems()
+fun HomeScreen(postsFlow: () -> Flow<PagingData<Post>>) {
+    val posts = postsFlow().collectAsLazyPagingItems()
 
-    posts.loadState
     LazyColumn {
         if (posts.loadState.refresh == LoadState.Loading) {
             item {

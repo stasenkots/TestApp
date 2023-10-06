@@ -18,19 +18,24 @@ import com.example.testapp.ui.components.OutlinedTextFieldWithError
 fun LoginScreen(
     onLogIn: () -> Unit
 ) {
-    val loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory())
-    val loginState by loginViewModel.loginUiState
+    val loginViewModel = viewModel<LoginViewModel>(factory = LoginViewModel.Factory())
+    val loginState by remember { loginViewModel.loginUiState }
+    val login = remember {
+        { username: String, password: String ->
+            loginViewModel.login(username, password)
+        }
+    }
 
     LoginScreen(
-        loginState = loginState,
-        login = loginViewModel::login,
+        loginState = { loginState },
+        login = login,
         onLogIn
     )
 }
 
 @Composable
 fun LoginScreen(
-    loginState: LoginUiState,
+    loginState: () -> LoginUiState,
     login: (String, String) -> Unit,
     onLogIn: () -> Unit
 ) {
@@ -49,16 +54,18 @@ fun LoginScreen(
 
 @Composable
 fun LoginResult(
-    loginState: LoginUiState,
+    loginState: () -> LoginUiState,
     onLogIn: () -> Unit
-){
-    when (loginState) {
+) {
+    when (val loginStateValue = loginState()) {
         is LoginUiState.LoginError -> {
-            Toast.makeText(LocalContext.current, loginState.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(LocalContext.current, loginStateValue.message, Toast.LENGTH_LONG).show()
         }
+
         is LoginUiState.LogIn -> {
             onLogIn()
         }
+
         is LoginUiState.LogOut -> {}
         is LoginUiState.InProgress -> {
             CircularProgressIndicator(
@@ -71,13 +78,13 @@ fun LoginResult(
 }
 
 @Composable
-private fun LoginAndPassword(login: (String, String) -> Unit){
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+private fun LoginAndPassword(login: (String, String) -> Unit) {
+    val username = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
 
     OutlinedTextFieldWithError(
-        value = username,
-        onValueChange = { username = it },
+        value = username.value,
+        onValueChange = { username.value = it },
         label = { Text(text = stringResource(R.string.username_label)) },
         validate = { it.isEmpty() },
         showError = {
@@ -85,8 +92,8 @@ private fun LoginAndPassword(login: (String, String) -> Unit){
         }
     )
     OutlinedTextFieldWithError(
-        value = password,
-        onValueChange = { password = it },
+        value = password.value,
+        onValueChange = { password.value = it },
         label = { Text(text = stringResource(R.string.password_label)) },
         validate = { it.isEmpty() },
         showError = {
@@ -94,11 +101,26 @@ private fun LoginAndPassword(login: (String, String) -> Unit){
         }
     )
 
+    LoginButton(username, password, login)
+
     Spacer(modifier = Modifier.size(100.dp))
 
+
+}
+
+@Composable
+fun LoginButton(
+    username: MutableState<String>,
+    password: MutableState<String>,
+    login: (String, String) -> Unit
+) {
+    val isButtonEnabled by remember {
+        derivedStateOf { password.value.isNotEmpty() && username.value.isNotEmpty() }
+    }
+
     Button(
-        onClick = { login(username, password) },
-        enabled = password.isNotEmpty() && username.isNotEmpty()
+        onClick = { login(username.value, password.value) },
+        enabled = isButtonEnabled
     ) {
         Text(text = stringResource(R.string.login_label))
     }
@@ -109,8 +131,8 @@ private fun LoginAndPassword(login: (String, String) -> Unit){
 @Composable
 fun DefaultPreview() {
     LoginScreen(
-        loginState = LoginUiState.InProgress,
-        login = {_, _ -> },
+        loginState = { LoginUiState.InProgress },
+        login = { _, _ -> },
         onLogIn = {}
     )
 }
