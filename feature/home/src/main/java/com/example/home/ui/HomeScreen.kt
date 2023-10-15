@@ -1,6 +1,7 @@
 package com.example.home.ui
 
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.snapping.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
@@ -31,11 +32,16 @@ fun HomeScreen() {
     HomeScreen { postsFlow }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(postsFlow: () -> Flow<PagingData<Post>>) {
     val posts = postsFlow().collectAsLazyPagingItems()
+    val state = rememberLazyListState()
 
-    LazyColumn {
+    LazyColumn(
+        state = state,
+        flingBehavior = rememberSnapFlingBehavior(lazyListState = state)
+    ) {
         if (posts.loadState.refresh == LoadState.Loading) {
             item {
                 Text(
@@ -52,6 +58,7 @@ fun HomeScreen(postsFlow: () -> Flow<PagingData<Post>>) {
             posts[index]?.let { PostView(it) }
         }
 
+
         if (posts.loadState.append == LoadState.Loading) {
             item {
                 CircularProgressIndicator(
@@ -66,10 +73,11 @@ fun HomeScreen(postsFlow: () -> Flow<PagingData<Post>>) {
 }
 
 @Composable
-private fun PostView(post: Post) {
+private fun LazyItemScope.PostView(post: Post) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
+            .fillParentMaxSize()
             .background(color = Color.White, shape = RoundedCornerShape(CornerSize(10.dp)))
     ) {
         Column(
@@ -128,5 +136,4 @@ private fun PostView(post: Post) {
 @Preview
 @Composable
 fun PostViewPreview() {
-    HomeScreen()
 }
